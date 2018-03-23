@@ -30,8 +30,18 @@ class HiddenLayer:
 
     def forward(self, X):
         if self.activation == tf.nn.relu:
-            return self.activation(tf.matmul(X,self.W) + self.b)
-        return (tf.matmul(X,self.W) + self.b)
+            Z=self.activation(tf.matmul(X,self.W) + self.b)
+
+        else:
+            Z= (tf.matmul(X,self.W) + self.b)
+
+        # Calculate batch mean and variance
+        batch_mean, batch_var = tf.nn.moments(Z, [0])
+
+        # Apply the  batch normalizing transform
+        Z_HAT = (Z - batch_mean) / tf.sqrt(batch_var + 0.001)
+        return Z_HAT
+
 
 
 class NeuralNetwork:
@@ -66,7 +76,7 @@ class NeuralNetwork:
         return  len(set(target))
 
     def get_cost(self, Y, T):
-        cost = tf.reduce_sum(tf.nn.softmax_cross_entropy_with_logits_v2(logits=Y, labels=T))
+        cost = tf.reduce_sum(tf.nn.softmax_cross_entropy_with_logits(logits=Y, labels=T))
         return cost
 
     def fit(self, print_period=10, show_fig=True):
@@ -104,9 +114,7 @@ class NeuralNetwork:
 
         #get the cost of our prediction
         cost=self.get_cost(Y=Y_predicted,T=T)
-
-        #define the trianing optimization
-        train_op = train_op = tf.train.AdamOptimizer(learning_rate=0.01).minimize(cost)
+        train_op = tf.train.AdamOptimizer(learning_rate=0.0015).minimize(cost)
 
 
         # we'll use this to calculate the error rate
@@ -124,8 +132,8 @@ class NeuralNetwork:
                 # get error rate
                 prediction = session.run(error_rate, feed_dict={X: X_in})
                 err = self.error_rate(prediction, Y_out)
-                print("Cost and error rate at iteration i={0}, j={1}: {2} / {3}".format(i, j, test_cost, err))
-                return test_cost
+                print("Cost / err at iteration i={0}, j={1}: {2} / {3}".format(i, j, test_cost, err))
+                costs.append(test_cost)
 
             session.run(init)
             for i in range(self.iterations):
@@ -138,7 +146,7 @@ class NeuralNetwork:
 
                     #validate
                     if j % print_period == 0:
-                        costs.append(validate(X_val,y_val,Yval_ind))
+                        validate(X_val,y_val,Yval_ind)
 
             print('------------------------------TEST------------------------------------')
             # call validation session
@@ -167,7 +175,7 @@ class NeuralNetwork:
 
 def main():
 
-    hidden_layer_sizes = [300,100,50,20]
+    hidden_layer_sizes = [400,300,100,50,20]
     neural_network = NeuralNetwork(hidden_layer_sizes = hidden_layer_sizes,
                                    dataset=load_dataset,
                                    )

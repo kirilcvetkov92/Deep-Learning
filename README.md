@@ -1,4 +1,4 @@
-# MachineLearning
+# Mnist Classifier in Tensorflow
 Implementation of Machine Learning algorithms and train models 
 
 

@@ -1,4 +1,4 @@
-# Mnist Classifier in Tensorflow
+# MNIST Classifier in Tensorflow
 Implementation of Machine Learning algorithms and train models 
 
 

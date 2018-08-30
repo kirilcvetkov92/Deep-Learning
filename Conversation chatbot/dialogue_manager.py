@@ -58,7 +58,7 @@ class DialogueManager(object):
 
         saver = tf.train.Saver()
 
-        saver.restore(self.sess, 'checkpoints/model_four_175')
+        saver.restore(self.sess, 'checkpoints/model_four_691')
 
 
 

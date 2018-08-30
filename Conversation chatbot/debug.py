@@ -144,6 +144,7 @@ class Seq2SeqModel(object):
         )
 
     def get_response(self, session, input_sentence):
+        print(input_sentence,"--------->")
         sentence = text_prepare(input_sentence)
         X = []
         row = []
@@ -228,8 +229,21 @@ model = Seq2SeqModel(vocab_size = len(word2id),
 
 saver = tf.train.Saver()
 
-saver.restore(sess, 'checkpoints/model_four_152')
+for i in range (834, 845):
+    saver.restore(sess, 'checkpoints/model_four_'+str(i))
+
+    print('---------------EPOCH-------------------------'+str(i))
+
+    print(model.get_response(sess, "hello"))
+    print(model.get_response(sess, "Hi"))
+    print(model.get_response(sess, "How are you?"))
+    print(model.get_response(sess, "What's your name?"))
+    print(model.get_response(sess, "Tell me about yourself"))
+    print(model.get_response(sess, "Do you love me?"))
+    print(model.get_response(sess, "What's the meaning of life?"))
+    print(model.get_response(sess, "How is the weather today?"))
+    print(model.get_response(sess, "Let's have a dinner"))
+    print(model.get_response(sess, "Are you a bot?"))
 
 
-response = model.get_reply(sess, "hello")
-print(response)
+    print("--------------------\n\n\n")

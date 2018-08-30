@@ -54,15 +54,6 @@ class DialogueManager(object):
     def create_chitchat_bot(self):
         """Initializes self.chitchat_bot with some conversational model."""
 
-        # Hint: you might want to create and train chatterbot.ChatBot here.
-        # It could be done by creating ChatBot with the *trainer* parameter equals 
-        # "chatterbot.trainers.ChatterBotCorpusTrainer"
-        # and then calling *train* function with "chatterbot.corpus.english" param
-        
-        ########################
-        #### YOUR CODE HERE ####
-        ########################
-
         self.chatbot = ChatBot(
             'ckorpion',
             trainer='chatterbot.trainers.ChatterBotCorpusTrainer'

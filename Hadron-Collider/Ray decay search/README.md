@@ -1,4 +1,4 @@
-# Week3 programming assignment
+
 Data files you will find here https://github.com/hse-aml/hadron-collider-machine-learning/releases/tag/Week_3
 
 ## FILES at the release

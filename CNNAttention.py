@@ -342,5 +342,3 @@ class NeuralNetwork:
         pass
 
 
-# To Add & Refactor from my Original Code:
-# Attention Modules: small, large
